@@ -1,15 +1,21 @@
-body, html {
+html {
     min-height: 100vh;
     min-width: 100vw;
 }
 
 body {
     position: relative;
-    background: #FFFFFF
+    display: flex;
+    justify-content: center;
+    background: #FFFFFF;
+    min-height: 100vh;
+    min-width: 1440px;
 }
 
 .content-c {
+    min-width: 1440px;
     display: flex;
     flex-direction: column;
-    padding: 0 150px;
+    padding: 0 100px;
+    box-sizing: border-box;
 }
