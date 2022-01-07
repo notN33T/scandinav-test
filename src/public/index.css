@@ -1,0 +1,15 @@
+body, html {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+body {
+    position: relative;
+    background: #FFFFFF
+}
+
+.content-c {
+    display: flex;
+    flex-direction: column;
+    padding: 0 12.5%
+}
