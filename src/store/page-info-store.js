@@ -1,5 +1,5 @@
 const initialStateCurrency = {
-    category: 'ALL',
+    category: 'all',
 }
 
 const reducer = (state = initialStateCurrency, action) => {

@@ -1,10 +1,11 @@
 import React                  from 'react'
 import { ApolloProvider }     from 'react-apollo'
 import ApolloClient           from 'apollo-boost'
-import Header                 from './header-component/header'
 import { BrowserRouter }      from 'react-router-dom'
 import store                  from './store/stores'
 import { Provider }           from 'react-redux'
+import Header                 from './header-component/header'
+import PagesRouter            from './router/router'
 import './public/index.css'
 
 class App extends React.Component {
@@ -25,6 +26,7 @@ class App extends React.Component {
             <BrowserRouter>
               <div className='content-c'>
                 <Header/>
+                <PagesRouter/>
               </div>
             </BrowserRouter>
           </Provider>

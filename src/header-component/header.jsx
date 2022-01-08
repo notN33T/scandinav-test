@@ -3,7 +3,7 @@ import { connect }              from 'react-redux'
 import { Query }                from 'react-apollo'
 import { changeCategoryAction,
     changeCurrencyAction }      from '../store/action-creators/action-creators'
-import {CURRENCIES_QUERY}       from '../graph-querys/graph-querys'
+import { CURRENCIES_QUERY }     from '../graph-querys/graph-querys'
 import './css/header.css'
 
 class Header extends React.Component {
@@ -24,23 +24,23 @@ class Header extends React.Component {
         return (
             <nav className='main-header'>
                 <div className='category-links'>
-                    <p onClick={() => changeCategory('ALL')}
+                    <p onClick={() => changeCategory('all')}
                     className=
                     { 'nav-btn'+(
-                        category.category==='ALL' ? ' nav-btn-active' : ''
+                        category.category==='all' ? ' nav-btn-active' : ''
                         ) 
                     }
                     >All</p>
-                    <p onClick={() => changeCategory('TECH')}
+                    <p onClick={() => changeCategory('tech')}
                     className={
                     'nav-btn'+ (
-                        category.category==='TECH' ? ' nav-btn-active' : ''
+                        category.category==='tech' ? ' nav-btn-active' : ''
                         ) 
                     }>Tech</p>
 
-                    <p onClick={() => changeCategory('CLOTHES')}
+                    <p onClick={() => changeCategory('clothes')}
                     className={'nav-btn'+ (
-                        category.category==='CLOTHES' ? ' nav-btn-active' : ''
+                        category.category==='clothes' ? ' nav-btn-active' : ''
                         ) 
                     }>Clothes</p>
 
