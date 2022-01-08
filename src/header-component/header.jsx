@@ -97,7 +97,7 @@ class Header extends React.Component {
                                             className='currencys-switcher' 
                                             onClick={() => changeCurrency({label:currency.label, symbol:currency.symbol})}
                                             key={currency.label}>
-                                            {currency.label} {currency.symbol}
+                                            {currency.symbol} {currency.label}
                                         </p>)
                                     }
                                 }

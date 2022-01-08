@@ -57,11 +57,16 @@
 }
 
 .hdr-icon-c {
-  margin-top: 6px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-top: 6px;
   margin-left: 20px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
 }
 
 .hdr-switcher {
@@ -77,17 +82,13 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  padding: 20px 20px;
   top: 65px;
   width: 114px;
   right: -23px;
-  height: 169px;
-  padding-right: 20px;
   -webkit-box-shadow: 0 0 40px #00000010;
           box-shadow: 0 0 40px #00000010;
   color: #000;
@@ -96,9 +97,11 @@
 }
 
 .currencys-switcher {
+  padding: 10px 0;
   font-family: Raleway;
   font-weight: 700;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .hdr-currency {
