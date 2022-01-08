@@ -1,19 +1,44 @@
-import React          from 'react'
-import { Link }       from 'react-router-dom'
+import React                from 'react'
+import { connect }          from 'react-redux'
 import './css/header.css'
+// .nav-btn-active
 class Header extends React.Component {
     constructor(props) {
         super()
         this.state = {}
     }
     render() {
+        const category = this.props
+        const changeCategory = value => {
+            category.dispatch({
+                type: 'CHANGE CATEGORY',
+                payload: {category: value},
+            })
+        }
         return (
             <nav className='main-header'>
-
                 <div className='category-links'>
-                    <Link to='all' className='nav-btn nav-btn-active'>All</Link>
-                    <Link to='Tech' className='nav-btn'>Tech</Link>
-                    <Link to='Clothes' className='nav-btn'>Clothes</Link>
+                    
+                    <p onClick={() => changeCategory('ALL')}
+                    className=
+                    { 'nav-btn'+(
+                        category.category==='ALL' ? ' nav-btn-active' : ''
+                        ) 
+                    }
+                    >All</p>
+                    <p onClick={() => changeCategory('TECH')}
+                    className={
+                    'nav-btn'+ (
+                        category.category==='TECH' ? ' nav-btn-active' : ''
+                        ) 
+                    }>Tech</p>
+
+                    <p onClick={() => changeCategory('CLOTHES')}
+                    className={'nav-btn'+ (
+                        category.category==='CLOTHES' ? ' nav-btn-active' : ''
+                        ) 
+                    }>Clothes</p>
+
                 </div>
 
                 <div className='hdr-logo-c'>
@@ -60,4 +85,6 @@ class Header extends React.Component {
     }
 }
 
-export default Header
+export default connect(state => ({
+    category: state.pageInfo.category,
+}))(Header)
