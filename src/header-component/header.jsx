@@ -1,24 +1,29 @@
-import React                from 'react'
-import { connect }          from 'react-redux'
+import React                    from 'react'
+import { connect }              from 'react-redux'
+import { Query }                from 'react-apollo'
+import { changeCategoryAction,
+    changeCurrencyAction }      from '../store/action-creators/action-creators'
+import {CURRENCIES_QUERY}       from '../graph-querys/graph-querys'
 import './css/header.css'
-// .nav-btn-active
+
 class Header extends React.Component {
     constructor(props) {
         super()
-        this.state = {}
+        this.state = {displayCurrencys: 'none'}
     }
     render() {
         const category = this.props
-        const changeCategory = value => {
-            category.dispatch({
-                type: 'CHANGE CATEGORY',
-                payload: {category: value},
-            })
+        const changeCategory = value => changeCategoryAction(value, category)
+        const currency = this.props
+        const changeCurrency = value => {changeCurrencyAction(value, currency);openCurrencySwitcherHandler()}
+        const openCurrencySwitcherHandler = () => {
+            this.state.displayCurrencys === 'none' ? 
+            this.setState({displayCurrencys: 'flex'}): 
+            this.setState({displayCurrencys: 'none'})
         }
         return (
             <nav className='main-header'>
                 <div className='category-links'>
-                    
                     <p onClick={() => changeCategory('ALL')}
                     className=
                     { 'nav-btn'+(
@@ -62,9 +67,12 @@ class Header extends React.Component {
                 </div>
 
                 <div className='hdr-icons-c'>
-                    <div className='hdr-icon-c'>
+                    <div className='hdr-icon-c'
+                    onClick={() => openCurrencySwitcherHandler()}>
                         <div className='hdr-currency-c'>
-                            <p className='hdr-currency'>$</p>
+                            <p className='hdr-currency'>
+                                {currency.currency.symbol}
+                            </p>
                         </div>
                         <div className='hdr-switcher'>
                             <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,6 +87,22 @@ class Header extends React.Component {
                         <path d="M15.6875 14.9814C14.4875 14.9814 13.498 15.9277 13.498 17.0752C13.498 18.2226 14.4876 19.1689 15.6875 19.1689C16.8875 19.1689 17.877 18.2226 17.877 17.0752C17.8565 15.9284 16.8875 14.9814 15.6875 14.9814ZM15.6875 17.9011C15.2031 17.9011 14.8239 17.5385 14.8239 17.0752C14.8239 16.612 15.2031 16.2493 15.6875 16.2493C16.172 16.2493 16.5512 16.612 16.5512 17.0752C16.5512 17.5188 16.1506 17.9011 15.6875 17.9011Z" fill="#43464E"/>
                         </svg>
                     </div>
+                    <div className='currency-switcher-menu' style={{display:this.state.displayCurrencys}}>
+                            <Query query={CURRENCIES_QUERY}>
+                                {({loading, data}) => {
+                                    if (loading) return 'Loading...';
+                                    const {currencies} = data
+                                    return currencies.map(currency => 
+                                        <p 
+                                            className='currencys-switcher' 
+                                            onClick={() => changeCurrency({label:currency.label, symbol:currency.symbol})}
+                                            key={currency.label}>
+                                            {currency.label} {currency.symbol}
+                                        </p>)
+                                    }
+                                }
+                            </Query>
+                    </div>
                 </div>
             </nav>
         )
@@ -87,4 +111,5 @@ class Header extends React.Component {
 
 export default connect(state => ({
     category: state.pageInfo.category,
+    currency: state.currency
 }))(Header)
