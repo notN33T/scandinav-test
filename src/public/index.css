@@ -10,6 +10,7 @@ body {
     background: #FFFFFF;
     min-height: 100vh;
     min-width: 1440px;
+    overflow-x: hidden;
 }
 
 .content-c {

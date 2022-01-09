@@ -25,5 +25,84 @@
   -ms-grid-rows: auto;
       grid-template-rows: auto;
   gap: 103px 40px;
+  margin-top: 117px;
+  margin-bottom: 191px;
+}
+
+.product-img-c-plp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 356px;
+  height: 332px;
+  overflow: hidden;
+}
+
+.product-img-c-plp img {
+  width: 100%;
+}
+
+.product-c {
+  position: relative;
+  padding: 16px;
+}
+
+.product-c:hover {
+  -webkit-box-shadow: 0 0 40px #00000020;
+          box-shadow: 0 0 40px #00000020;
+}
+
+.to-pdp-page {
+  display: none;
+  position: absolute;
+  bottom: 54px;
+  right: 20px;
+}
+
+.to-pdp-page:hover {
+  cursor: pointer;
+}
+
+.product-name-price-c {
+  font-family: Raleway;
+  font-weight: 600;
+  line-height: 28px;
+  font-size: 18px;
+  margin-top: 24px;
+}
+
+.out-of-stock {
+  position: relative;
+  opacity: 0.5;
+}
+
+.out-of-stock::before {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 91%;
+  height: 74%;
+  content: 'out of stock';
+  text-transform: uppercase;
+  font-family: Raleway;
+  font-size: 23px;
+  font-weight: 600;
+  position: absolute;
+}
+
+.in-stock:hover .to-pdp-page {
+  display: block;
 }
 /*# sourceMappingURL=category.css.map */
