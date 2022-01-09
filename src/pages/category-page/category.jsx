@@ -13,7 +13,6 @@ class Category extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         return(
             <div className='category-content-c'>
                 
@@ -32,7 +31,6 @@ class Category extends React.Component {
                                 const {products} = data.category
                                 return products.map(product => {
                                     return (
-
                                     <div
                                     key={product.id}
                                     className={'product-c' + (product.inStock ? ' in-stock' : ' out-of-stock')}>
