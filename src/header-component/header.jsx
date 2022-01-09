@@ -8,7 +8,7 @@ import './css/header.css'
 
 class Header extends React.Component {
     constructor(props) {
-        super()
+        super(props)
         this.state = {displayCurrencys: 'none'}
     }
     render() {

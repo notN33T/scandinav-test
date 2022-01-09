@@ -14,6 +14,7 @@ export const CATEGORY_PRODUCTS_ALL = gql`
     products {
       id
       name
+      brand
      	inStock
       gallery
       prices {
