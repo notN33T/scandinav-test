@@ -136,13 +136,14 @@
   margin-right: 12px;
   margin-bottom: 12px;
   height: 43px;
-  border: 1px solid #000;
+  outline: 1px solid #0000002f;
+  border: 0.5px solid #0000002f;
   cursor: pointer;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .atr-pdp:hover {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
   background-color: #000;
   color: #FFF;
 }
@@ -154,5 +155,26 @@
   font-family: 'Source Sans Pro';
   line-height: 15px;
   font-weight: 600;
+}
+
+.atr-pdp-color {
+  width: 100%;
+  height: 100%;
+}
+
+.active-pdp-attr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #fff;
+  outline: 2px solid #000;
 }
 /*# sourceMappingURL=product.css.map */

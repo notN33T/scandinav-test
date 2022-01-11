@@ -1,5 +1,6 @@
 import React             from 'react'
-import { withRouter }    from '../../withRouter/withRouter'
+import { withRouter }    from '../../myLibrary/withRouter'
+import toObject          from '../../myLibrary/convertToObject'
 import { connect }       from 'react-redux'
 import { Query }         from 'react-apollo'
 import gql               from 'graphql-tag'
@@ -7,7 +8,7 @@ import './css/product.css'
 class Product extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {mainImg: '', stateForm:{}}
+        this.state = {mainImg: '', stateForm:[], selectedOptions:[]}
     }
     
     render() {
@@ -30,18 +31,52 @@ class Product extends React.Component {
                 <Query query={query}>
                     {({loading, data})=> {
                         if(loading) return 'Loading..'
-
                         const { product } = data
                         const mainImgChangeHandler = (newImg) => {
                             this.setState({ mainImg:newImg })
                         }
-
-                        const stateForm = {attributes:[], id: null}
+                        
+                        const keys = []
+                        const values = []
+                        const massiveObjects = this.state.stateForm
+                        const selectedOptions = this.state.selectedOptions
 
                         const stateFormChangeHandler = (data) => {
-                            
+
+                            const key = data.attribute 
+                            const value = data.value
+
+                            // change values algorithm
+
+                            for(let objNum in massiveObjects) {
+                                if (massiveObjects[objNum].hasOwnProperty(key)) {
+
+                                    keys.push(key)
+                                    values.push(value)
+
+                                    const object = toObject(keys, values)
+                                    massiveObjects[objNum] = object
+                                    selectedOptions[objNum] = value
+
+                                    this.setState({ selectedOptions: selectedOptions })
+                                    return this.setState({ stateForm: massiveObjects })
+                                }
+                            }
+
+                            // add values algorithm
+
+                            keys.push(key)
+                            values.push(value)
+
+                            const object = toObject(keys, values)
+                            massiveObjects.push(object)
+                            selectedOptions.push(value)
+
+                            this.setState({ selectedOptions: selectedOptions })
+                            this.setState({ stateForm: massiveObjects })
                         }   
-                        return(  
+
+                        return(   
                         <>
                         <div className='product-pdp-imgs-c'>
                             {product.gallery.map(photo => {
@@ -72,8 +107,15 @@ class Product extends React.Component {
                                                     <div 
                                                         className='atr-pdp' 
                                                         key={item.id}
-                                                        onClick={() => stateFormChangeHandler({attribute: attribute.name,value: item.value})}>
-                                                        <p className='atr-pdp-txt'>{item.displayValue}</p>
+                                                        onClick={() => stateFormChangeHandler({ attribute: attribute.name,value: item.value })}>
+                                                        {item.value[0]==='#'? 
+                                                        <div 
+                                                        className={`atr-pdp-color` + ( this.state.selectedOptions.findIndex(value => value === item.value) !== -1 ? ' active-pdp-attr' : '') } 
+                                                        style={{backgroundColor: item.value}}></div>:
+                                                        <p className={`atr-pdp-txt` + (this.state.selectedOptions.findIndex(value => value === item.value) !== -1 ? ' active-pdp-attr' : '')}>
+                                                            {item.value}
+                                                        </p>}
+                                                        
                                                     </div>
                                                 )
                                             })}
@@ -86,7 +128,6 @@ class Product extends React.Component {
                         </>)
                     }}
                 </Query>
-                
             </div>
         )
     }
