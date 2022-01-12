@@ -11,3 +11,10 @@ export const changeCurrencyAction = (value, dispatcher) => {
         //changeCurrency({label: 'EUR', symbol: 'Э'})
     })
 }
+
+export const addProductAction = (value, dispatcher) => {
+    dispatcher.dispatch({
+        type: 'ADD ITEM',
+        payload: value,
+    })
+}

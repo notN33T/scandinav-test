@@ -1,15 +1,23 @@
-import React             from 'react'
-import { withRouter }    from '../../myLibrary/withRouter'
-import toObject          from '../../myLibrary/convertToObject'
-import parse             from '../../myLibrary/parceHtml'
-import { connect }       from 'react-redux'
-import { Query }         from 'react-apollo'
-import gql               from 'graphql-tag'
+import React                from 'react'
+import { withRouter }       from '../../myLibrary/withRouter'
+import { Navigate }         from 'react-router-dom'
+import toObject             from '../../myLibrary/convertToObject'
+import parse                from '../../myLibrary/parceHtml'
+import { addProductAction } from '../../store/action-creators/action-creators'
+import { connect }          from 'react-redux'
+import { Query }            from 'react-apollo'
+import gql                  from 'graphql-tag'
 import './css/product.css'
+
 class Product extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {mainImg: '', stateForm:[], selectedOptions:[]}
+        this.state = {
+            mainImg: '', 
+            stateForm:[], 
+            selectedOptions:[],
+            redirect: false
+        }
     }
     
     render() {
@@ -27,6 +35,7 @@ class Product extends React.Component {
               prices { amount currency { label }}
             }
           }`
+        if (this.state.redirect) return <Navigate to='/'/>
         return (
             <div className='product-content-c'>
                 <Query query={query}>
@@ -41,6 +50,12 @@ class Product extends React.Component {
                         const values = []
                         const massiveObjects = this.state.stateForm
                         const selectedOptions = this.state.selectedOptions
+
+                        const sendFormHandler = () => {
+                            let value = { id: id, attributes: this.state.stateForm }
+                            addProductAction(value, this.props)
+                            this.setState({redirect: true})
+                        }
 
                         const stateFormChangeHandler = (data) => {
 
@@ -81,20 +96,19 @@ class Product extends React.Component {
 
                         return(   
                         <>
+
+
                         <div className='product-pdp-imgs-c'>
-
-
                             {product.gallery.map(photo => {
                             return <div className='product-pdp-img-c' key={photo}>
                                 <img 
                                 onClick={ () => mainImgChangeHandler(photo) }
                                 src={photo}
                                 alt='Product'/>
-                            </div>
-                        })}
-
-
+                            </div>})}
                         </div>
+
+
                         <div className='main-pdp-img-c'>
                             <img src={this.state.mainImg === '' ? product.gallery[0] : this.state.mainImg} alt='Product'/>
                         </div>
@@ -109,9 +123,7 @@ class Product extends React.Component {
                                 {product.attributes.map(attribute => {
                                     return (
                                     <div className='atr-and-inf-pdp-c' key={attribute.id}>
-
-                                        <p className='atr-pdp-name'>{attribute.name}:</p>
-
+                                        <p key={attribute.name} className='atr-pdp-name'>{attribute.name}:</p>
                                         <div className='atr-pdp-c'>
 
 
@@ -130,16 +142,11 @@ class Product extends React.Component {
                                                         key={item.value}>
                                                             {item.value}
                                                         </p>}
-                                                        
                                                     </div>
                                                 </>)
                                             })}
-
-
                                         </div>
-                                    </div>
-                                    )}
-                            )}
+                                    </div>)})}
 
 
                             <div className='price-pdp-c'>
@@ -155,7 +162,8 @@ class Product extends React.Component {
                             </div>
 
                             <div className='btnbuy-pdp-c'>
-                                <button className='btnbuy-pdp'>add to cart</button>
+                                <button className='btnbuy-pdp'
+                                onClick={() => sendFormHandler()}>add to cart</button>
                             </div>
 
                             <div className='descr-pdp-c'>
@@ -173,4 +181,5 @@ class Product extends React.Component {
 }
 export default connect(state=> ({
     currency: state.currency,
+    basket: state.basket,
 }))(withRouter(Product))
