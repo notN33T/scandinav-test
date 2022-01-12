@@ -1,6 +1,7 @@
 import React             from 'react'
 import { withRouter }    from '../../myLibrary/withRouter'
 import toObject          from '../../myLibrary/convertToObject'
+import parse             from '../../myLibrary/parceHtml'
 import { connect }       from 'react-redux'
 import { Query }         from 'react-apollo'
 import gql               from 'graphql-tag'
@@ -56,7 +57,7 @@ class Product extends React.Component {
 
                                     const object = toObject(keys, values)
                                     massiveObjects[objNum] = object
-                                    selectedOptions[objNum] = value
+                                    selectedOptions[objNum] = (key + value)
 
                                     this.setState({ selectedOptions: selectedOptions })
                                     return this.setState({ stateForm: massiveObjects })
@@ -70,15 +71,19 @@ class Product extends React.Component {
 
                             const object = toObject(keys, values)
                             massiveObjects.push(object)
-                            selectedOptions.push(value)
+                            selectedOptions.push(key + value)
 
                             this.setState({ selectedOptions: selectedOptions })
                             this.setState({ stateForm: massiveObjects })
                         }   
 
+                        const parsedDescription = parse(product.description)
+
                         return(   
                         <>
                         <div className='product-pdp-imgs-c'>
+
+
                             {product.gallery.map(photo => {
                             return <div className='product-pdp-img-c' key={photo}>
                                 <img 
@@ -87,6 +92,8 @@ class Product extends React.Component {
                                 alt='Product'/>
                             </div>
                         })}
+
+
                         </div>
                         <div className='main-pdp-img-c'>
                             <img src={this.state.mainImg === '' ? product.gallery[0] : this.state.mainImg} alt='Product'/>
@@ -97,32 +104,64 @@ class Product extends React.Component {
                                 <p className='brand-pdp'>{product.brand}</p>
                             </div>
                             <div className='all-atr-inf-pdp-c'>
+
+
                                 {product.attributes.map(attribute => {
                                     return (
                                     <div className='atr-and-inf-pdp-c' key={attribute.id}>
+
                                         <p className='atr-pdp-name'>{attribute.name}:</p>
+
                                         <div className='atr-pdp-c'>
+
+
                                             {attribute.items.map(item => {
-                                                return (
+                                                return (<>
                                                     <div 
                                                         className='atr-pdp' 
                                                         key={item.id}
                                                         onClick={() => stateFormChangeHandler({ attribute: attribute.name,value: item.value })}>
                                                         {item.value[0]==='#'? 
-                                                        <div 
-                                                        className={`atr-pdp-color` + ( this.state.selectedOptions.findIndex(value => value === item.value) !== -1 ? ' active-pdp-attr' : '') } 
-                                                        style={{backgroundColor: item.value}}></div>:
-                                                        <p className={`atr-pdp-txt` + (this.state.selectedOptions.findIndex(value => value === item.value) !== -1 ? ' active-pdp-attr' : '')}>
+                                                        <div
+                                                        className={`atr-pdp-color` + ( this.state.selectedOptions.findIndex(value => value === (attribute.name + item.value)) !== -1 ? ' active-pdp-attr' : '') } 
+                                                        style={{backgroundColor: item.value}}
+                                                        key={item.value}></div>:
+                                                        <p className={`atr-pdp-txt` + (this.state.selectedOptions.findIndex(value => value === (attribute.name + item.value)) !== -1 ? ' active-pdp-attr' : '')}
+                                                        key={item.value}>
                                                             {item.value}
                                                         </p>}
                                                         
                                                     </div>
-                                                )
+                                                </>)
                                             })}
+
+
                                         </div>
                                     </div>
                                     )}
                             )}
+
+
+                            <div className='price-pdp-c'>
+                                <p className='price-pdp-txt'>Price:</p>
+                                <p>
+                                    <span className='product-symbol-pdp'>
+                                        {this.props.currency.symbol}
+                                    </span> 
+                                    <span className='product-amount-pdp'>
+                                        {product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount}
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div className='btnbuy-pdp-c'>
+                                <button className='btnbuy-pdp'>add to cart</button>
+                            </div>
+
+                            <div className='descr-pdp-c'>
+                                {parsedDescription}
+                            </div>    
+                                
                             </div>
                         </div>
                         </>)
@@ -133,5 +172,5 @@ class Product extends React.Component {
     }
 }
 export default connect(state=> ({
-
+    currency: state.currency,
 }))(withRouter(Product))
