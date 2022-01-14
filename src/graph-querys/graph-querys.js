@@ -56,3 +56,35 @@ export const CATEGORY_PRODUCTS_CLOTHES = gql`
     }
   }
 }`
+
+export function PRODUCT_INFO(id) {
+  const query = gql`
+    {
+        product(id:"${id}") {
+          id
+          name
+          brand
+          gallery
+          attributes { name items { value id displayValue } }
+          prices { amount currency { label } }
+        }
+      }`
+      return query
+}
+
+export function PRODUCT_PDP_INFO(id) {
+  const query = gql`
+        {
+            product(id:"${id}") {
+              id
+              name
+              brand
+              gallery
+              category
+              description
+              attributes { name items { value id displayValue } }
+              prices { amount currency { label }}
+            }
+          }`
+          return query
+}

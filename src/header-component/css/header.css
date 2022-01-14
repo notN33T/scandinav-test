@@ -21,7 +21,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 80px;
+  height: 100%;
 }
 
 .nav-btn {
@@ -110,8 +110,6 @@
 }
 
 .hdr-logo-c {
-  margin-top: 8px;
-  padding-right: 42px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -121,5 +119,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-top: 8px;
+  padding-right: 42px;
 }
 /*# sourceMappingURL=header.css.map */
