@@ -41,7 +41,7 @@ class Basket extends Component {
                   const amountOfPhotos = product.gallery.length
 
                   const changeCurrentPhoto = () => {
-                    if (currentPhoto + 1 == amountOfPhotos) return setCurrentPhoto(0)
+                    if (currentPhoto + 1 === amountOfPhotos) return setCurrentPhoto(0)
                     setCurrentPhoto(currentPhoto + 1)
                   }
 
@@ -62,7 +62,7 @@ class Basket extends Component {
                     </div>
                     
                     <div className='basket-attributes-c'>
-                      {product.attributes[0].items.map(attribute => {
+                      {product.attributes[0] === undefined ? null : product.attributes[0].items.map(attribute => {
                         return <div 
                         key={attribute.value}
                         className={'basket-attribute-c' + (

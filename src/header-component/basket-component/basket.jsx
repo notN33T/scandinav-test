@@ -113,7 +113,7 @@ class Basket extends Component {
                     </div>
                     
                     <div className='basket-hdr-attributes-c'>
-                      {product.attributes[0].items.map(attribute => {
+                      {product.attributes[0] === undefined ? null : product.attributes[0].items.map(attribute => {
                         return <div 
                         key={attribute.value}
                         className={'basket-hdr-attribute-c' + (
