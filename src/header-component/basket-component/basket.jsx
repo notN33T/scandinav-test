@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { connect }          from 'react-redux'
 import { Query }            from 'react-apollo'
 import { PRODUCT_INFO }     from '../../graph-querys/graph-querys'
+import { Link }             from 'react-router-dom'
 import { addAmountAction, 
        takeAmountAction }   from '../../store/action-creators/action-creators'
 import './css/basket.css'
@@ -9,7 +10,7 @@ import './css/basket.css'
 class Basket extends Component {
   constructor(props) {
     super(props)
-    this.state = {displayBasket: 'none'}
+    this.state = {displayBasket: 'none', totalPrice: 0}
   }
   
   render() {
@@ -18,6 +19,14 @@ class Basket extends Component {
       this.state.displayBasket === 'none' ?
       this.setState({displayBasket: 'flex'}): 
       this.setState({displayBasket: 'none'})
+    }
+
+    const removeTotalPriceHandler = () => {
+      this.setState({totalPrice: 0})
+    }
+
+    const changeTotalPriceHandler = (totalPriceOfProduct) => {
+      this.setState({totalPrice: this.state.totalPrice + totalPriceOfProduct})
     }
  
     return (
@@ -65,7 +74,15 @@ class Basket extends Component {
                   const { product } = data
                   const { id } = item
                   const indexInBasket = basket.items.findIndex(object => object.id === id)
-                  
+
+                  useEffect(() => {
+                    removeTotalPriceHandler()
+                  }, [this.props.currency.symbol, this.props.basket.amountOfProducts])
+
+                  useEffect(() => {
+                    setTimeout(() => {changeTotalPriceHandler(product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount * this.props.basket.items[indexInBasket].amount)}, 1)
+                  }, [indexInBasket, this.props.currency.symbol, this.props.basket.amountOfProducts]);
+
 
                   return <div className='product-basket-c' key={id}>
 
@@ -99,16 +116,15 @@ class Basket extends Component {
 
                   <div className='basket-hdr-amount-btns-c'>
                     <button className='basket-hdr-amount-btn'
-                    onClick={ ()=> addAmountAction({ id }, this.props) }>+</button>
+                    onClick={ ()=> { addAmountAction({ id }, this.props); changeTotalPriceHandler(product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount) } }>+</button>
                     <p className='basket-hdr-amount'>{ this.props.basket.items[indexInBasket].amount } </p>
                     <button className='basket-hdr-amount-btn'
-                    onClick={ ()=> takeAmountAction({ id }, this.props) }>-</button>
+                    onClick={ ()=> { takeAmountAction({ id }, this.props); changeTotalPriceHandler(-product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount) } }>-</button>
                   </div>
                     
                     <div className='basket-hdr-img-c'>
                       <img src={[product.gallery[0]]} alt="Product" />
                     </div>
-
                   </div>
                   
                 }}
@@ -119,8 +135,23 @@ class Basket extends Component {
               )}
           </div>
 
+          <div className='basket-hdr-totalprice-c'>
+            <p className='basket-hdr-totalprice-txt'>
+              Total
+            </p>
+            <p className='basket-hdr-totalprice-txt'>
+              {this.props.currency.symbol}{Math.round(this.state.totalPrice*100)/100}
+            </p>
+          </div>
+          
+          <div className='basket-hdr-buttons-view-check-c'>
+              <Link to='/bakset' className='basket-hdr-buttons-view-check basket-hdr-view-bag'>view bag</Link>
+              <p className='basket-hdr-buttons-view-check basket-hdr-check-out'
+              onClick={() => openBasketHandler()}>check out</p>
+          </div>
+
         </div>
-        <div className='bg-basket-opened' style={{display: this.state.displayBasket}}>        </div>
+        <div className='bg-basket-opened' style={{display: this.state.displayBasket}}></div>
       </>
     )
   }
