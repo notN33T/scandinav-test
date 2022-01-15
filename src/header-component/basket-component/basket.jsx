@@ -162,8 +162,8 @@ class Basket extends Component {
           <div className='basket-hdr-buttons-view-check-c'>
               <Link to='/basket' className='basket-hdr-buttons-view-check basket-hdr-view-bag'
               onClick={() => openBasketHandler()}>view bag</Link>
-              <p className='basket-hdr-buttons-view-check basket-hdr-check-out'
-              onClick={() => openBasketHandler()}>check out</p>
+              <Link to='/' className='basket-hdr-buttons-view-check basket-hdr-check-out'
+              onClick={() => openBasketHandler()}>check out</Link>
           </div>
 
         </div>
