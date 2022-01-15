@@ -1,0 +1,197 @@
+.basket-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 80px;
+  max-width: 1098px;
+}
+
+.basket-page-title-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.basket-page-title {
+  font-family: Raleway;
+  font-weight: 700;
+  font-size: 32px;
+  text-transform: uppercase;
+}
+
+.basket-products-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  margin: 60px 0;
+}
+
+.product-basket-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 1098px;
+  margin: 10px 0;
+  padding: 20px 0 0 0;
+  border-top: 1px solid #00000020;
+}
+
+.basket-info-price-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 200px;
+  font-size: 30px;
+}
+
+.product-basket-info-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-family: Raleway;
+  font-weight: 600;
+  line-height: 45px;
+}
+
+.basket-price-c {
+  font-family: Raleway;
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 15px;
+}
+
+.basket-amount-img-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.basket-attributes-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 30px;
+  width: 500px;
+}
+
+.basket-attribute-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 61px;
+  height: 43px;
+  font-family: 'Source Sans Pro';
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid #000000;
+  margin-right: 10px;
+  background-color: #ffffff;
+}
+
+.basket-attribute-active {
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
+}
+
+.basket-img-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 141px;
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.basket-img-c img {
+  width: 100%;
+  height: auto;
+}
+
+.basket-amount-btns-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.basket-amount-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 45px;
+  height: 45px;
+  background: #fff;
+  outline: 1px solid #000;
+  font-family: Raleway;
+  font-weight: bold;
+  font-size: 22px;
+  border: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+}
+
+.basket-amount {
+  font-family: Raleway;
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+}
+/*# sourceMappingURL=basket.css.map */

@@ -1,4 +1,5 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component, 
+      useEffect, useState } from 'react'
 import { connect }          from 'react-redux'
 import { Query }            from 'react-apollo'
 import { PRODUCT_INFO }     from '../../graph-querys/graph-querys'
@@ -15,6 +16,7 @@ class Basket extends Component {
   
   render() {
     const basket = this.props.basket
+    
     const openBasketHandler = () => {
       this.state.displayBasket === 'none' ?
       this.setState({displayBasket: 'flex'}): 
@@ -35,15 +37,14 @@ class Basket extends Component {
         onClick={() => openBasketHandler()}>
 
             {basket.amountOfProducts !== 0 ?
-                <div className='hdr-amount-bsket-itms-c'>
-                <p className='amount-bsket-itms'>{basket.amountOfProducts}</p>
-                <div className='hdr-amount-bsket-itms-circle'>
+                <div className='basket-hdr-amount-itms-c'>
+                <p className='basket-hdr-amount-itms'>{basket.amountOfProducts}</p>
+                <div className='basket-hdr-amount-itms-circle'>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="20" height="20" rx="10" fill="#1D1F22"/>
                     </svg>
                 </div>
             </div> : null}
-            
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19.5613 4.87359C19.1822 4.41031 18.5924 4.12873 17.9821 4.12873H5.15889L4.75914 2.63901C4.52718 1.77302 3.72769 1.16895 2.80069 1.16895H0.653099C0.295301 1.16895 0 1.45052 0 1.79347C0 2.13562 0.294459 2.418 0.653099 2.418H2.80069C3.11654 2.418 3.39045 2.61936 3.47434 2.92139L6.04306 12.7077C6.27502 13.5737 7.07451 14.1778 8.00152 14.1778H16.4028C17.3289 14.1778 18.1507 13.5737 18.3612 12.7077L19.9405 6.50575C20.0877 5.941 19.9619 5.33693 19.5613 4.87365L19.5613 4.87359ZM18.6566 6.22252L17.0773 12.4245C16.9934 12.7265 16.7195 12.9279 16.4036 12.9279H8.00154C7.68569 12.9279 7.41178 12.7265 7.32789 12.4245L5.49611 5.39756H17.983C18.1936 5.39756 18.4042 5.49824 18.5308 5.65948C18.6567 5.81994 18.7192 6.0213 18.6567 6.22266L18.6566 6.22252Z" fill="#43464E"/>
@@ -74,19 +75,31 @@ class Basket extends Component {
                   const { product } = data
                   const { id } = item
                   const indexInBasket = basket.items.findIndex(object => object.id === id)
+                  const [prevAmount, setPrevAmount] = useState(0)
+
+                  useEffect(() => {
+                    let amount = basket.items[indexInBasket].amount
+                    let indexOnPrices = product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)
+
+                    if (amount > prevAmount) {
+                      changeTotalPriceHandler(product.prices[indexOnPrices].amount)
+                    } else {
+                      changeTotalPriceHandler(-product.prices[indexOnPrices].amount)
+                    }
+                    setPrevAmount(basket.items[indexInBasket].amount)
+                  }, [basket.items[indexInBasket].amount])
 
                   useEffect(() => {
                     removeTotalPriceHandler()
-                  }, [this.props.currency.symbol, this.props.basket.amountOfProducts])
+                  }, [this.props.currency.symbol, basket.amountOfProducts])
 
                   useEffect(() => {
-                    setTimeout(() => {changeTotalPriceHandler(product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount * this.props.basket.items[indexInBasket].amount)}, 1)
-                  }, [indexInBasket, this.props.currency.symbol, this.props.basket.amountOfProducts]);
+                    setTimeout(() => {changeTotalPriceHandler(product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount * basket.items[indexInBasket].amount) }, 5)
+                  }, [indexInBasket, this.props.currency.symbol, basket.amountOfProducts]);
 
+                  return <div className='basket-hdr-product-c' key={id}>
 
-                  return <div className='product-basket-c' key={id}>
-
-                  <div className='basket-info-price-c'>
+                  <div className='basket-hdr-info-price-c'>
                   <div className='product-basket-hdr-info-c'>
                       <p className='product-basket-hdr-name'>
                         {product.name}
@@ -116,10 +129,10 @@ class Basket extends Component {
 
                   <div className='basket-hdr-amount-btns-c'>
                     <button className='basket-hdr-amount-btn'
-                    onClick={ ()=> { addAmountAction({ id }, this.props); changeTotalPriceHandler(product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount) } }>+</button>
-                    <p className='basket-hdr-amount'>{ this.props.basket.items[indexInBasket].amount } </p>
+                    onClick={ ()=> { addAmountAction({ id }, this.props) } }>+</button>
+                    <p className='basket-hdr-amount'>{ basket.items[indexInBasket].amount } </p>
                     <button className='basket-hdr-amount-btn'
-                    onClick={ ()=> { takeAmountAction({ id }, this.props); changeTotalPriceHandler(-product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount) } }>-</button>
+                    onClick={ ()=> { takeAmountAction({ id }, this.props)  } }>-</button>
                   </div>
                     
                     <div className='basket-hdr-img-c'>
@@ -129,10 +142,7 @@ class Basket extends Component {
                   
                 }}
               </Query>
-                
-              
-              }
-              )}
+              })}
           </div>
 
           <div className='basket-hdr-totalprice-c'>
@@ -145,7 +155,7 @@ class Basket extends Component {
           </div>
           
           <div className='basket-hdr-buttons-view-check-c'>
-              <Link to='/bakset' className='basket-hdr-buttons-view-check basket-hdr-view-bag'
+              <Link to='/basket' className='basket-hdr-buttons-view-check basket-hdr-view-bag'
               onClick={() => openBasketHandler()}>view bag</Link>
               <p className='basket-hdr-buttons-view-check basket-hdr-check-out'
               onClick={() => openBasketHandler()}>check out</p>

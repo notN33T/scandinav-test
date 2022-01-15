@@ -1,4 +1,4 @@
-.hdr-amount-bsket-itms-c {
+.basket-hdr-amount-itms-c {
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -13,7 +13,7 @@
   top: 25px;
 }
 
-.amount-bsket-itms {
+.basket-hdr-amount-itms {
   position: absolute;
   right: 0px;
   bottom: 4px;
@@ -22,7 +22,7 @@
   font-size: 14px;
 }
 
-.hdr-amount-bsket-itms-circle {
+.basket-hdr-amount-itms-circle {
   width: 14px;
 }
 
@@ -82,7 +82,7 @@
   font-weight: bold;
 }
 
-.product-basket-c {
+.basket-hdr-product-c {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -95,7 +95,7 @@
   margin: 26px 0;
 }
 
-.basket-info-price-c {
+.basket-hdr-info-price-c {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
