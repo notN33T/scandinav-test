@@ -131,6 +131,7 @@
 }
 
 .basket-img-c {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -148,6 +149,27 @@
 .basket-img-c img {
   width: 100%;
   height: auto;
+}
+
+.basket-arrows-c {
+  position: absolute;
+  width: 141px;
+}
+
+.basket-arrows-c .basket-arrows-right {
+  position: absolute;
+  right: 6px;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+}
+
+.basket-arrows-c .basket-arrows-left {
+  position: absolute;
+  left: 6px;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
 }
 
 .basket-amount-btns-c {

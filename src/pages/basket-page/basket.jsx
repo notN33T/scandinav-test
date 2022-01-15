@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component,
+                useState }  from 'react'
 import { Query }            from 'react-apollo'
 import { connect }          from 'react-redux'
 import { PRODUCT_INFO }     from '../../graph-querys/graph-querys'
@@ -31,10 +32,18 @@ class Basket extends Component {
 
                   if (loading) return 'Loading..'
                   if (error) console.log(error)
-                  
-                  const { product } = data
+
                   const { id } = item
+                  const { product } = data
                   const indexInBasket = basket.items.findIndex(object => object.id === id)
+
+                  const [currentPhoto, setCurrentPhoto] = useState(0)
+                  const amountOfPhotos = product.gallery.length
+
+                  const changeCurrentPhoto = () => {
+                    if (currentPhoto + 1 == amountOfPhotos) return setCurrentPhoto(0)
+                    setCurrentPhoto(currentPhoto + 1)
+                  }
 
                   return <div className='product-basket-c' key={id}>
 
@@ -76,7 +85,24 @@ class Basket extends Component {
                     </div>
                       
                       <div className='basket-img-c'>
-                        <img src={[product.gallery[0]]} alt="Product" />
+                        <img src={[product.gallery[currentPhoto]]} alt="Product" />
+
+                        <div className='basket-arrows-c'>
+
+                          <div className='basket-arrows-right' onClick={ ()=> changeCurrentPhoto() }>
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 13L7 7L1 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
+
+                          <div className='basket-arrows-left' onClick={ ()=> changeCurrentPhoto() }>
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 13L1 7L7 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
+
+                        </div>
+
                       </div>
                   </div>
 
