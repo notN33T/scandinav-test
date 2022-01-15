@@ -12,8 +12,9 @@ class Basket extends Component {
   constructor(props) {
     super(props)
     this.state = {displayBasket: 'none', totalPrice: 0}
+
   }
-  
+
   render() {
     const basket = this.props.basket
     
@@ -30,15 +31,17 @@ class Basket extends Component {
     const changeTotalPriceHandler = (totalPriceOfProduct) => {
       this.setState({totalPrice: this.state.totalPrice + totalPriceOfProduct})
     }
- 
+    
+    const amountOfProducts = basket.amountOfProducts
+
     return (
       <>
       <div className='hdr-icon-c'
         onClick={() => openBasketHandler()}>
 
-            {basket.amountOfProducts !== 0 ?
+            {amountOfProducts !== 0 ?
                 <div className='basket-hdr-amount-itms-c'>
-                <p className='basket-hdr-amount-itms'>{basket.amountOfProducts}</p>
+                <p className='basket-hdr-amount-itms'>{amountOfProducts}</p>
                 <div className='basket-hdr-amount-itms-circle'>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="20" height="20" rx="10" fill="#1D1F22"/>
@@ -58,12 +61,12 @@ class Basket extends Component {
 
               <div className='basket-hdr-title-c'>
                 <p className='basket-hdr-title'>
-                  <span className='basket-hdr-title-bold'>My bag </span> {basket.amountOfProducts} items
+                  <span className='basket-hdr-title-bold'>My bag </span> {amountOfProducts} items
                 </p>
               </div>
 
               <div className='basket-hdr-products-c'>
-              { basket.amountOfProducts === 0 ? null :
+              { amountOfProducts === 0 ? null :
               
               basket.items.map(item => {
                 return <Query key={item.id} query={PRODUCT_INFO(item.id)}>
@@ -77,10 +80,12 @@ class Basket extends Component {
                   const indexInBasket = basket.items.findIndex(object => object.id === id)
                   const [prevAmount, setPrevAmount] = useState(0)
 
+                  let indexOnPrices = product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)
+
+                  // Becouse of basket page amount buttons
                   useEffect(() => {
                     let amount = basket.items[indexInBasket].amount
-                    let indexOnPrices = product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)
-
+                    
                     if (amount > prevAmount) {
                       changeTotalPriceHandler(product.prices[indexOnPrices].amount)
                     } else {
@@ -89,13 +94,14 @@ class Basket extends Component {
                     setPrevAmount(basket.items[indexInBasket].amount)
                   }, [basket.items[indexInBasket].amount])
 
+                  // When currency is changed
                   useEffect(() => {
                     removeTotalPriceHandler()
-                  }, [this.props.currency.symbol, basket.amountOfProducts])
+                  }, [indexInBasket, this.props.currency.symbol, amountOfProducts])
 
                   useEffect(() => {
                     setTimeout(() => {changeTotalPriceHandler(product.prices[product.prices.findIndex(obj=>obj.currency.label===this.props.currency.label)].amount * basket.items[indexInBasket].amount) }, 5)
-                  }, [indexInBasket, this.props.currency.symbol, basket.amountOfProducts]);
+                  }, [indexInBasket, this.props.currency.symbol, amountOfProducts]);
 
                   return <div className='basket-hdr-product-c' key={id}>
 
@@ -132,9 +138,8 @@ class Basket extends Component {
                     onClick={ ()=> { addAmountAction({ id }, this.props) } }>+</button>
                     <p className='basket-hdr-amount'>{ basket.items[indexInBasket].amount } </p>
                     <button className='basket-hdr-amount-btn'
-                    onClick={ ()=> { takeAmountAction({ id }, this.props)  } }>-</button>
+                    onClick={ ()=> { takeAmountAction({ id }, this.props)  } }>-</button> 
                   </div>
-                    
                     <div className='basket-hdr-img-c'>
                       <img src={[product.gallery[0]]} alt="Product" />
                     </div>
@@ -150,7 +155,7 @@ class Basket extends Component {
               Total
             </p>
             <p className='basket-hdr-totalprice-txt'>
-              {this.props.currency.symbol}{Math.round(this.state.totalPrice*100)/100}
+              {this.props.currency.symbol}{basket.amountOfProducts === 0? 0 : Math.round(this.state.totalPrice*100)/100}
             </p>
           </div>
           
