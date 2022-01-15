@@ -103,6 +103,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  width: 160px;
+  overflow: hidden;
 }
 
 .basket-hdr-products-c {
@@ -110,7 +112,7 @@
   display: -ms-flexbox;
   display: flex;
   overflow-x: hidden;
-  height: 370px;
+  height: 380px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -155,5 +157,73 @@
 .basket-hdr-attribute-active {
   background-color: #000;
   color: #fff;
+}
+
+.basket-hdr-amount-btns-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 2px 0;
+}
+
+.basket-hdr-amount-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  outline: 1px solid #000;
+  font-family: Raleway;
+  font-weight: bold;
+  font-size: 22px;
+  border: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+}
+
+.basket-hdr-amount {
+  font-family: Raleway;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+.basket-hdr-img-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 107px;
+  max-height: 138px;
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.basket-hdr-img-c img {
+  width: 100%;
+  height: auto;
+  z-index: 2;
 }
 /*# sourceMappingURL=basket.css.map */

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect }          from 'react-redux'
 import { Query }            from 'react-apollo'
 import { PRODUCT_INFO }     from '../../graph-querys/graph-querys'
+import { addAmountAction, 
+       takeAmountAction }   from '../../store/action-creators/action-creators'
 import './css/basket.css'
 
 class Basket extends Component {
@@ -63,7 +65,7 @@ class Basket extends Component {
                   const { product } = data
                   const { id } = item
                   const indexInBasket = basket.items.findIndex(object => object.id === id)
-
+                  
 
                   return <div className='product-basket-c' key={id}>
 
@@ -93,6 +95,20 @@ class Basket extends Component {
                       
                     </div>
                   </div>
+
+
+                  <div className='basket-hdr-amount-btns-c'>
+                    <button className='basket-hdr-amount-btn'
+                    onClick={ ()=> addAmountAction({ id }, this.props) }>+</button>
+                    <p className='basket-hdr-amount'>{ this.props.basket.items[indexInBasket].amount } </p>
+                    <button className='basket-hdr-amount-btn'
+                    onClick={ ()=> takeAmountAction({ id }, this.props) }>-</button>
+                  </div>
+                    
+                    <div className='basket-hdr-img-c'>
+                      <img src={[product.gallery[0]]} alt="Product" />
+                    </div>
+
                   </div>
                   
                 }}

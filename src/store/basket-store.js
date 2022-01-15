@@ -13,24 +13,26 @@ const reducer = (state = initialStateCurrency, action) => {
                 amountOfProducts: state.amountOfProducts + 1,
             }
 
-        case 'AMOUTN ADD':
+        case 'AMOUNT ADD':
             objectId = state.items.findIndex(obj => obj.id === action.payload.id)
             newBag = state.items
-            newBag[objectId].amount += 1
+            newBag[objectId].amount++
 
             return { ...state,
                 items: newBag }
 
-        case 'AMOUTN TAKE':
+        case 'AMOUNT TAKE':
             objectId = state.items.findIndex(obj => obj.id === action.payload.id)
             newBag = state.items
 
-            newBag[objectId].amount -= 1
+            newBag[objectId].amount--
 
             if(newBag[objectId].amount === 0) {
                 newBag.splice(objectId, 1)
+                
                 return { ...state,
                     items: newBag,
+                    amountOfProducts: state.amountOfProducts - 1
                 }
             }
 
