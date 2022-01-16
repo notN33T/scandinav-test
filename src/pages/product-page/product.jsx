@@ -1,4 +1,4 @@
-import React                from 'react'
+import React, { Component } from 'react'
 import { withRouter }       from '../../myLibrary/withRouter'
 import { Navigate }         from 'react-router-dom'
 import toObject             from '../../myLibrary/convertToObject'
@@ -10,7 +10,7 @@ import { PRODUCT_PDP_INFO } from '../../graph-querys/graph-querys'
 
 import './css/product.css'
 
-class Product extends React.Component {
+class Product extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -22,9 +22,10 @@ class Product extends React.Component {
     }
     render() {
         let id = (this.props.params.id).replace(':','')
-        
-        if (this.state.redirect) return <Navigate to='/'/>
+        const basket = this.props.basket
+        const indexOnBasket = basket.items.findIndex(obj=>obj.id ===id)
 
+        if (this.state.redirect) return <Navigate to='/'/>
         return (
             <div className='product-content-c' key={id}>
                 <Query key={id} query={PRODUCT_PDP_INFO(id)}>
@@ -42,6 +43,9 @@ class Product extends React.Component {
                         const values = []
                         const massiveObjects = this.state.stateForm
                         const selectedOptions = this.state.selectedOptions
+
+                        const productAttributesLength = product.attributes.length
+                        const selectedAttributesLength = this.state.stateForm.length
 
                         const sendFormHandler = () => {
                             let value = { id: id, attributes: this.state.stateForm, amount: 1 }
@@ -155,9 +159,12 @@ class Product extends React.Component {
 
                             <div className='btnbuy-pdp-c'>
                                 <button className='btnbuy-pdp'
-                                onClick={() => sendFormHandler()}>add to cart</button>
+                                onClick={() => sendFormHandler() } 
+                                style={indexOnBasket > -1 || productAttributesLength !== selectedAttributesLength ? {opacity: 0.6} : {opacity: 1}} 
+                                disabled={indexOnBasket === -1 && productAttributesLength === selectedAttributesLength ? false : true }>add to cart</button>
                             </div>
-
+                            {console.log("index " + `${indexOnBasket === -1}`)}
+                            {console.log("attributes " + `${productAttributesLength === selectedAttributesLength}`)}
                             <div className='descr-pdp-c'>
                                 {parsedDescription}
                             </div>    
