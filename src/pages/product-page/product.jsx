@@ -163,8 +163,6 @@ class Product extends Component {
                                 style={indexOnBasket > -1 || productAttributesLength !== selectedAttributesLength ? {opacity: 0.6} : {opacity: 1}} 
                                 disabled={indexOnBasket === -1 && productAttributesLength === selectedAttributesLength ? false : true }>add to cart</button>
                             </div>
-                            {console.log("index " + `${indexOnBasket === -1}`)}
-                            {console.log("attributes " + `${productAttributesLength === selectedAttributesLength}`)}
                             <div className='descr-pdp-c'>
                                 {parsedDescription}
                             </div>    
